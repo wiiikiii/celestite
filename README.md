@@ -2,6 +2,8 @@
 
 <img src="https://crystal-lang.org/assets/media/crystal_icon.svg?sanitize=1" height=21> Crystal + <img src="https://vuejs.org/images/logo.png" height=16> Vue.js = :zap:
 
+<img src="https://github.com/noahlh/crystal-vue/workflows/crystal%20spec/badge.svg">
+
 ## Introduction
 
 Crystal-vue allows you to use the full power of [Vue.js](https://vuejs.org/) components in your [Crystal](https://crystal-lang.org) web apps. It's a drop-in replacement for your view layer -- no more need for intermediate `.ecr` templates. With crystal-vue, you write your backend server code in Crystal, your frontend client code in JavaScript & HTML, and everything works together seamlessly...and fast.
