@@ -83,7 +83,9 @@ Now instead of a server-rendered `.ecr` template + client-rendered Vue component
 <template>
   <div>
     <h1>Hello World!</h1>
-    <p>This was rendered server-side (by crystal): {{ example_crystal_data }}</p>
+    <p>
+      This was rendered server-side (by crystal): {{ example_crystal_data }}
+    </p>
   </div>
 </template>
 
@@ -159,7 +161,9 @@ Changing our Vue component slightly:
 <template>
   <div>
     <h1>Hello World!</h1>
-    <p>This was rendered server-side (by crystal): {{ example_crystal_data }}</p>
+    <p>
+      This was rendered server-side (by crystal): {{ example_crystal_data }}
+    </p>
     +
     <p>This was rendered server-side (by node): {{ example_node_data }}</p>
   </div>
@@ -213,7 +217,9 @@ Let's modify our Vue template once more:
 <template>
   <div>
     <h1>Hello World!</h1>
-    <p>This was rendered server-side (by crystal): {{ example_crystal_data }}</p>
+    <p>
+      This was rendered server-side (by crystal): {{ example_crystal_data }}
+    </p>
     <p>This was rendered server-side (by node): {{ example_node_data }}</p>
     +
     <p>{{ example_client_data }}</p>
@@ -345,6 +351,8 @@ dependencies:
     github: noahlh/crystal-vue
     version: ~> 0.1.0
 ```
+
+**1a) Add 'polka' to package.json - yarn add polka --save dev or npm add --save-dev polka**
 
 **2) Add `crystal_vue_amber_init.cr` to `/config/initializers`.** [An example is provided.](/config/crystal_vue_amber_init.example.cr) You can name this file whatever you want, just so long as it gets called upon initialization.
 

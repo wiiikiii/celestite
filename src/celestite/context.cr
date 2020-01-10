@@ -1,6 +1,6 @@
 require "json"
 
-module CrystalVue
+module Celestite
   class Context < Hash(Symbol, (String | Int32 | Float64))
     def to_json
       string = JSON.build do |json|

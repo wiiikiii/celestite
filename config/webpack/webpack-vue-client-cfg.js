@@ -8,7 +8,7 @@ module.exports = merge(baseConfig, {
   name: "vue-client",
   target: "web",
   entry: {
-    client: "scripts/entry-client.js"
+    client: "vue-scripts/entry-client.js"
   },
   output: {
     filename: "cvue.[name].[hash].js"

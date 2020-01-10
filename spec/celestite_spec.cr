@@ -2,10 +2,10 @@ require "./spec_helper"
 require "./renderer/**"
 require "./support/**"
 
-describe CrystalVue do
+describe Celestite do
   describe "self.init" do
     it "returns a Renderer when called with no arguments" do
-      r = CrystalVue.init(
+      r = Celestite.init(
         routes_file: "#{__DIR__}/scripts/routes.js",
         component_dir: "#{__DIR__}/scripts"
       )

@@ -1,5 +1,5 @@
 <template>
-  <div id="crystal-vue-app">
+  <div id="celestite-app">
     <router-view></router-view>
   </div>
 </template>

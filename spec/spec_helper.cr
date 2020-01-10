@@ -1,7 +1,7 @@
 require "spec"
-require "../src/crystal-vue"
+require "../src/celestite"
 
-ENV["CRYSTAL_VUE"] = "test"
+ENV["CELESTITE"] = "test"
 
 def get_logger
   Logger.new(STDOUT)

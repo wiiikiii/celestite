@@ -5,7 +5,7 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 module.exports = {
   resolve: {
     alias: {
-      scripts: path.resolve(__dirname, "../../src/scripts/")
+      scripts: path.resolve(__dirname, "../../src/vue-scripts/")
     },
     modules: [path.resolve(__dirname, "../../node_modules")]
   },

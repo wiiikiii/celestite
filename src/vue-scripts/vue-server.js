@@ -23,17 +23,24 @@ import webpackClientConfig from "config/webpack/webpack-vue-client-cfg.js";
 const port = process.env.NODE_PORT || 4000;
 const NODE_ENV = process.env.NODE_ENV || "development";
 const VUE_SSR_BUILD_DIR = _resolve(__dirname, "../../build/");
-const VUE_TEMPLATE_DIR = process.env.VUE_TEMPLATE_DIR ? _resolve(process.env.VUE_TEMPLATE_DIR) : null;
+const VUE_TEMPLATE_DIR = process.env.VUE_TEMPLATE_DIR
+  ? _resolve(process.env.VUE_TEMPLATE_DIR)
+  : null;
 const VUE_COMPONENT_DIR = process.env.VUE_COMPONENT_DIR
   ? _resolve(process.env.VUE_COMPONENT_DIR)
-  : _exit("Component directory not defined - please set VUE_COMPONENT_DIR environment variable");
+  : _exit(
+      "Component directory not defined - please set VUE_COMPONENT_DIR environment variable"
+    );
 const VUE_ROUTES_FILE = process.env.VUE_ROUTES_FILE
   ? _resolve(process.env.VUE_ROUTES_FILE)
-  : _exit("Routes file must be specified - please set VUE_ROUTES_FILE environment variable");
+  : _exit(
+      "Routes file must be specified - please set VUE_ROUTES_FILE environment variable"
+    );
 const VUE_CLIENT_BUILD_DIR = process.env.VUE_CLIENT_BUILD_DIR
   ? _resolve(process.env.VUE_CLIENT_BUILD_DIR)
   : VUE_SSR_BUILD_DIR;
-const VUE_CLIENT_BUILD_DIR_PUBLIC_PATH = process.env.VUE_CLIENT_BUILD_DIR_PUBLIC_PATH
+const VUE_CLIENT_BUILD_DIR_PUBLIC_PATH = process.env
+  .VUE_CLIENT_BUILD_DIR_PUBLIC_PATH
   ? process.env.VUE_CLIENT_BUILD_DIR_PUBLIC_PATH
   : "/";
 
@@ -71,10 +78,13 @@ const webpackCommonVariableConfig = {
 // Modify client config for hot reloading in dev
 if (NODE_ENV == "development") {
   webpackClientConfig.entry.client = [
-    "webpack-hot-middleware/client?path=http://localhost:4000/crystal-vue-hmr/hmr?name=vue-client",
+    `webpack-hot-middleware/client?path=http://localhost:${port}/vue-hmr/hmr?name=vue-client`,
     webpackClientConfig.entry.client
   ];
-  webpackClientConfig.plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin());
+  webpackClientConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  );
 }
 
 // merge common variables with core webpack configs
@@ -128,10 +138,19 @@ webpackCompiler.hooks.done.tap({ name: "Done" }, stats => {
     })
   );
 
-  const assetFS = NODE_ENV == "development" ? webpackDevMiddlewareInstance.fileSystem : fs;
-  serverBundle = JSON.parse(assetFS.readFileSync(_resolve(VUE_SSR_BUILD_DIR, "vue-ssr-server-bundle.json"), "utf-8"));
+  const assetFS =
+    NODE_ENV == "development" ? webpackDevMiddlewareInstance.fileSystem : fs;
+  serverBundle = JSON.parse(
+    assetFS.readFileSync(
+      _resolve(VUE_SSR_BUILD_DIR, "vue-ssr-server-bundle.json"),
+      "utf-8"
+    )
+  );
   clientManifest = JSON.parse(
-    assetFS.readFileSync(_resolve(VUE_SSR_BUILD_DIR, "vue-ssr-client-manifest.json"), "utf-8")
+    assetFS.readFileSync(
+      _resolve(VUE_SSR_BUILD_DIR, "vue-ssr-client-manifest.json"),
+      "utf-8"
+    )
   );
 
   // Webpack doesn't support multiple output within a single config file, and we need to put the client JSON
@@ -139,7 +158,11 @@ webpackCompiler.hooks.done.tap({ name: "Done" }, stats => {
   // so we do this with a symlink.  This feels hack-y, but for now it'll have to do.
 
   try {
-    console.log(`creating symlink from ${_resolve(VUE_SSR_BUILD_DIR)} to ${_resolve(VUE_CLIENT_BUILD_DIR)}`);
+    console.log(
+      `creating symlink from ${_resolve(VUE_SSR_BUILD_DIR)} to ${_resolve(
+        VUE_CLIENT_BUILD_DIR
+      )}`
+    );
     fs.symlinkSync(_resolve(VUE_SSR_BUILD_DIR), _resolve(VUE_CLIENT_BUILD_DIR));
   } catch (e) {
     if (e.code == "EEXIST") {
@@ -162,11 +185,15 @@ const doRender = () => {
     let url = new URL(`http://localhost:${port}${req.url}`);
     let pathname = url.pathname;
     let templateRequested = url.searchParams.get("template");
-    let templateResult = templateFiles.find(file => file.name == templateRequested);
+    let templateResult = templateFiles.find(
+      file => file.name == templateRequested
+    );
     let template = templateResult ? templateResult.body : null;
 
     console.log(`[node] SSR request received - ${req.url}`);
-    console.log(`[node] type: ${req.method}, path: ${pathname}, template: ${templateRequested}`);
+    console.log(
+      `[node] type: ${req.method}, path: ${pathname}, template: ${templateRequested}`
+    );
 
     let { serverBundle, clientManifest } = getSSRBundle();
 
@@ -189,7 +216,7 @@ const doRender = () => {
     // We use the HTTP body to pass a JSON object containing the crystal-rendered parameters.
     // Probably a better/more robust way to do this, but it's simple and works for now.
     let body = [];
-    let vueContext = {};
+    let celestiteContext = {};
 
     req
       .on("error", err => {
@@ -202,10 +229,10 @@ const doRender = () => {
         let rawBody = Buffer.concat(body).toString();
 
         if (rawBody) {
-          Object.assign(vueContext, JSON.parse(rawBody));
+          Object.assign(celestiteContext, JSON.parse(rawBody));
         }
 
-        let context = { pathname, vueContext };
+        let context = { pathname, celestiteContext };
 
         console.log(`[node] Context going into render:`);
         console.log(context);
@@ -229,7 +256,7 @@ if (NODE_ENV == "development") {
   app.use(webpackDevMiddlewareInstance);
   app.use(
     webpackHotMiddleware(webpackCompiler, {
-      path: "/crystal-vue-hmr/hmr"
+      path: "/vue-hmr/hmr"
     })
   );
   webpackDevMiddlewareInstance.waitUntilValid(() => {
@@ -252,7 +279,9 @@ if (!(NODE_ENV == "development")) {
 
 server.listen(port, err => {
   if (err) throw err;
-  console.log(`[node] SSR renderer listening in ${NODE_ENV} mode on port ${port}`);
+  console.log(
+    `[node] Vue SSR renderer listening in ${NODE_ENV} mode on port ${port}`
+  );
 });
 
 // handle exceptions gracefully so our client doesn't die of loneliness
