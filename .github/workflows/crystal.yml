@@ -4,15 +4,18 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     container:
       image: crystallang/crystal
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: shards install
-    - name: Run tests
-      run: crystal spec
+      - name: Setup Node.js for use with actions
+        uses: actions/setup-node@v1.1.0
+        with:
+          version: lts
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: shards install
+      - name: Run tests
+        run: crystal spec
