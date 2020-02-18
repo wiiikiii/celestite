@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v1.1.0
         with:
-          version: lts
+          version: 12.16.0
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: shards install
