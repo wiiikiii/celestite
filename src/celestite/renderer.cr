@@ -28,7 +28,7 @@ module Celestite
     def initialize(@component_dir = nil, @routes_file = nil, @logger = Logger.new(nil), @port = 4000, @template_dir = nil, @default_template = nil, @build_dir = nil, @build_dir_public_path = nil)
       ENV["CELESTITE"] ||= "development"
       @logger.info "Renderer Initialized"
-      @client = HTTP::Client.new("localhost", @port)
+      @client = HTTP::Client.new("0.0.0.0", @port)
       @errors = IO::Memory.new
     end
 
