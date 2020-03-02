@@ -48,7 +48,7 @@ module Celestite
     begin
       io = IO::Memory.new
       # If pgrep is successful that this process has children
-      if Process.run("pgrep", args: ["-P #{pid}"], output: io).success?
+      if Process.run("pgrep", args: ["-P", pid.to_s], output: io).success?
         child_pids = io.to_s.split
         child_pids.each do |child_pid|
           self.kill_process_tree(child_pid.to_i)

@@ -541,7 +541,7 @@ If you need to manually specify which path you're rending (i.e. you're not in Am
 
 (Vue only) Which layout/template you'd like to render the component in. Uses the default template specified in the init file if none specified on render.
 
-### Why is the syntax `celestite_render('/index') and not`celestite_render(Index.vue)`?
+### Why is the syntax `celestite_render('/index')` and not `celestite_render(Index.vue)`?
 
 With `.ecr` templates, you're explicitly rendering a specific template. It would logically make sense to do the same, but Celestite doesn't quite work that way -- instead, you render a route, which is composed of a path and a component. Since the mapping between a controller's routes & actions is already established, specifically naming the component file would be redundant.
 
