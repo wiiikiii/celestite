@@ -158,7 +158,7 @@ describe Celestite do
           r = Celestite::Renderer::Svelte.new(
             component_dir: "#{__DIR__}/../scripts/svelte"
           )
-          run_spec_server(r) do
+          run_spec_server(r, output: STDOUT) do
             res = r.render("/")
             res.should contain("<div id=celestite-app>")
             res.should contain("<div>Test!</div>")
@@ -168,7 +168,7 @@ describe Celestite do
           r = Celestite::Renderer::Svelte.new(
             component_dir: "#{__DIR__}/../scripts/svelte"
           )
-          run_spec_server(r) do
+          run_spec_server(r, output: STDOUT) do
             res = r.render("/context", Celestite::Context{:foo => "bar"})
             res.should contain("<div>Test context: bar</div>")
           end
