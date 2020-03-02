@@ -16,6 +16,6 @@ jobs:
           version: 12.16.0
       - uses: actions/checkout@v1
       - name: Install NPM dependencies
-        run: npm install
+        run: npm ci
       - name: Run tests
         run: crystal spec
