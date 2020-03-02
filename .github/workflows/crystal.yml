@@ -16,6 +16,8 @@ jobs:
           version: 12.16.0
       - uses: actions/checkout@v1
       - name: Install NPM dependencies
-        run: npm --version
+        run: npm ci
+      - name: Show die
+        run: ls -l /__w/celestite/celestite/node_modules/sapper/
       # - name: Run tests
-      # run: crystal spec
+      #   run: crystal spec
